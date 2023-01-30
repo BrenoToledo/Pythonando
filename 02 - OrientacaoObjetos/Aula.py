@@ -210,3 +210,157 @@ if EXERCICIO_EXECUTAR == 6:
         @classmethod
         def andar():
             print('Estou Andando')
+            
+#----------------------------------------------------------------
+# AULA 07 - CLS
+#----------------------------------------------------------------
+if EXERCICIO_EXECUTAR == 7:
+    "Como Funciona o CLS e como ele ajuda os métodos estáticos"
+    
+    #EXEMPLO
+    class Pessoa:
+        
+        # ATRIBUTOS DE CLASSE
+        possui_olho = True
+        possui_boca = True
+        raca = "Ser Humano"
+        
+        #ATRIBUTOS DE INSTANCIA
+        def __init__(self,nome, idade ):
+            self.nome = nome
+            self.idade = idade
+            
+        def retorna_nome(self):
+            return self.name
+        
+        def logar_sistema(self):    #DEFININDO O METODO
+            print(f' {self.retorna_nome()} está logando no sistema') # Se tirar o Self não funciona
+            
+        #é definido pelo Decorator @classmethod
+        @classmethod
+        def andar():
+            print('Estou Andando')
+            
+        # IMPORTANTE : Podemos criar atributos de classe dentro dos métodos de classe
+        # podemos pegar por exemplo o método de classe ANDAR e criar um atributo PERNAS. 
+        """
+        @classmethod
+        def andar(cls):
+            cls.pernas = 2 
+            print('Estou Andando')
+            
+        """
+
+        # Com isso, esse novo atributo será criado assim que usarmos esse método de classe
+        
+        """
+        Pessoa.andar() # acessa o método de classe e graças ao CLS podemos criar o Atributo de classe
+        print(Pessoa.pernas) # Acessando o atributo de classe
+        >>> 2
+        """
+
+        # Podemos fazer o método de classe mudar um valor de atributo de classe já definido
+        # Imagine que você quer mudar a raça depois de chamar a classe teste, então temos ...
+        # o atributo de classe chamado raca na classe Pessoa, e vamos criar um método de classe chamado exame_sangue
+        
+        """
+        @classmethod
+        def exame_sangue(cls): # cls passa o estado da classe com todas informações
+            cls.raca = 'A+' 
+        """
+        
+        # Quando criarmos uma nova Pessoa, será atribuido automáticamente a raca 'Ser Humano'
+        # mas depois que rodarmos o método exame_sangue, teremos a raca alterada para o resultado 
+        # do exame de sangue por exemplo.
+        
+        """
+        Pessoa.exame_sangue() 
+        print(Pessoa.raca)
+        >>> A+
+        """
+        
+#----------------------------------------------------------------
+# AULA 08 - class methods X static methods
+#----------------------------------------------------------------
+if EXERCICIO_EXECUTAR == 8:
+    """
+    
+    CLASS METHODS =================================================================
+    
+    É capaz de acessar e editar a classe que ele pertence, isso inclui ele fazer 
+    edição em atributos de classe por exemplo ou chamar outro metodo de dentro dele
+    
+        EXEMPLO =================================================================
+        
+        class Carro(): 
+        
+            # ATRIBUTOS DE CLASSE
+            
+            PILOTO_AUTOMATICO = True
+            CAMBIO_AUTOMATICO = True
+            
+            def acelerar(self):
+                pass
+            
+            def frear(self):
+                pass
+            
+            def velocimetro ()
+            @classmethod
+            def piloto_automatico(cls):
+                if PILOTO_AUTOMATICO:        # Eu posso acessar Variaveis globais e editar se for @classmethod
+                    cls.acelerar()           # Eu posso chamar outros métodos se for um @classmethod
+                else: 
+                    print('O carro não é automático !')
+
+        
+        FIM =================================================================
+        
+    
+    STATIC METHODS =================================================================
+    
+    É incapaz de acessar e editar a classe que ele pertence, isso inclui ele fazer 
+    edição em atributos de classe por exemplo ou chamar outro metodo de dentro dele, 
+    ele é isolado e funciona para códigos utilitários
+    
+
+        
+        EXEMPLO =================================================================
+        
+        class Carro(): 
+        
+            # ATRIBUTOS DE CLASSE
+            PILOTO_AUTOMATICO = True
+            CAMBIO_AUTOMATICO = True
+            E_KM_HORA = True
+            
+            def acelerar(self):
+                pass
+            
+            def frear(self):
+                pass
+            
+            def velocidade(self):
+                if E_KM_HORA:
+                    calculo_km()
+                else:
+                    calculo_milhas(velocidade)
+            @classmethod
+            def piloto_automatico(cls):
+                if PILOTO_AUTOMATICO:        # Eu posso acessar Variaveis globais e editar se for @classmethod
+                    cls.acelerar(velocidade)           # Eu posso chamar outros métodos se for um @classmethod
+                else: 
+                    print('O carro não é automático !')
+            
+            # STATIC METHODS 
+            
+            @staticmethod
+            def calculo_km(velocidade): # Não consegue interagir com a classe que pertence
+                pass
+            
+            @staticmethod
+            def calculo_milhas(velocidade): # Não consegue interagir com a classe que pertence
+                pass
+        FIM =================================================================
+    
+    """         
