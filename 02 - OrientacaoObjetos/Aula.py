@@ -369,11 +369,4 @@ if EXERCICIO_EXECUTAR == 8:
 # AULA 09 - Herança
 #----------------------------------------------------------------
 if EXERCICIO_EXECUTAR == 9:
-    
-    """
-    
-    """
-    
-    class Vendedor:
-        
-        def falar
+    pass

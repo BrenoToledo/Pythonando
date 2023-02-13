@@ -4,46 +4,58 @@ import sys
 import subprocess
 import time
 
-def saplogin():
+class Sap():
 
-    try:
-        
-        # ABRIR O SAP
-        #path = r"C:\Program Files (x86)\SAP\FrontEnd\SAPgui\saplogon.exe"
-        #subprocess.Popen(path)
-        #time.sleep(10)
+    SESSION = None
+    CONNECTION = None
+    APPLICATION = None
+    SAPGUIAUTO = None
+    
+    def saplogin():
 
-        SapGuiAuto = win32com.client.GetObject('SAPGUI')
-        if not type(SapGuiAuto) == win32com.client.CDispatch:
-            return
+        try:
+            
+            # ABRIR O SAP
+            #path = r"C:\Program Files (x86)\SAP\FrontEnd\SAPgui\saplogon.exe"
+            #subprocess.Popen(path)
+            #time.sleep(10)
 
-        application = SapGuiAuto.GetScriptingEngine
-        if not type(application) == win32com.client.CDispatch:
-            SapGuiAuto = None
-            return
-        connection = application.OpenConnection("ConnectionName", True)
+            SAPGUIAUTO = win32com.client.GetObject('SAPGUI')
+            if not type(SAPGUIAUTO) == win32com.client.CDispatch:
+                return
 
-        if not type(connection) == win32com.client.CDispatch:
-            application = None
-            SapGuiAuto = None
-            return
+            APPLICATION = SAPGUIAUTO.GetScriptingEngine
+            if not type(APPLICATION) == win32com.client.CDispatch:
+                SAPGUIAUTO = None
+                return
+            connection = APPLICATION.OPENCONNECTION("ConnectionName", True)
 
-        session = connection.Children(0)
-        if not type(session) == win32com.client.CDispatch:
-            connection = None
-            application = None
-            SapGuiAuto = None
-            return
+            if not type(CONNECTION) == win32com.client.CDispatch:
+                APPLICATION = None
+                SAPGUIAUTO = None
+                return
 
-        session.findById("wnd[0]/usr/txtRSYST-BNAME").text = "USERNAME"
-        session.findById("wnd[0]/usr/pwdRSYST-BCODE").text = "PASSWORD"
-        session.findById("wnd[0]").sendVKey(0)
+            SESSION = CONNECTION.Children(0)
+            if not type(SESSION) == win32com.client.CDispatch:
+                CONNECTION = None
+                APPLICATION = None
+                SAPGUIAUTO = None
+                return
 
-    except:
-        print(sys.exc_info()[0])
+            time.sleep(5)
+            SESSION.findById("wnd[0]/usr/txtRSYST-BNAME").text = "USERNAME"
+            SESSION.findById("wnd[0]/usr/pwdRSYST-BCODE").text = "PASSWORD"
+            SESSION.findById("wnd[0]").sendVKey(0)
+            
 
-    finally:
-        session = None
-        connection = None
-        application = None
-        SapGuiAuto = None
+            
+            
+
+        except:
+            print(sys.exc_info()[0])
+
+        finally:
+            SESSION = None
+            CONNECTION = None
+            APPLICATION = None
+            SAPGUIAUTO = None
